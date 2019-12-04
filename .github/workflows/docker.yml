@@ -6,9 +6,7 @@ on:
       - master
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -29,6 +27,9 @@ jobs:
         echo "Building branch: $GITHUB_REF"
         echo "      at commit: ${{ github.sha }}"
         echo "   triggered by: ${{ github.event_name}}"
-        docker build .
-        docker push docker.pkg.github.com/$GITHUB_REPOSITORY/github-deployment-test:${GITHUB_REF#refs/heads/}
+        echo "Pushing to:      $docker_tag"
+        docker build . -t $docker_tag
+        docker push $docker_tag
+      env:
+        docker_tag: docker.pkg.github.com/$GITHUB_REPOSITORY/github-deployment-test:${GITHUB_REF#refs/heads/} 
       
