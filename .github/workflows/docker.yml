@@ -23,6 +23,9 @@ jobs:
             
     - name: Docker Build & Push
       run: |
-        docker build . -t docker.pkg.github.com/$GITHUB_REPOSITORY:${{ github.sha }}
-        docker push docker.pkg.github.com/$GITHUB_REPOSITORY:${{ github.sha }}
+        echo "Building branch: $GITHUB_REF"
+        echo "      at commit: ${{ github.sha }}"
+        echo "   triggered by: ${{ github.event_name}}"
+        docker build . -t docker.pkg.github.com/$GITHUB_REPOSITORY/service:$GITHUB_REF
+        docker push docker.pkg.github.com/$GITHUB_REPOSITORY/service:$GITHUB_REF
       
