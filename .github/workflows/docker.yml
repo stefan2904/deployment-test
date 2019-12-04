@@ -1,6 +1,9 @@
 name: Docker Image CI
 
-on: [push]
+on:
+  push:
+    branches: 
+      - master
 
 jobs:
 
@@ -26,6 +29,6 @@ jobs:
         echo "Building branch: $GITHUB_REF"
         echo "      at commit: ${{ github.sha }}"
         echo "   triggered by: ${{ github.event_name}}"
-        docker build . -t docker.pkg.github.com/$GITHUB_REPOSITORY/service:$GITHUB_REF
-        docker push docker.pkg.github.com/$GITHUB_REPOSITORY/service:$GITHUB_REF
+        docker build . -t docker.pkg.github.com/$GITHUB_REPOSITORY/service:${GITHUB_REF#refs/heads/}
+        docker push docker.pkg.github.com/$GITHUB_REPOSITORY/service:${GITHUB_REF#refs/heads/}
       
