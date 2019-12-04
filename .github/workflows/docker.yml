@@ -12,9 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag docker.pkg.github.com/$GITHUB_REPOSITORY:$(date +%s)
-  
+    - name: Write deployment info to html file
+      run: |
+        echo "<!--
+        echo "Last deployed: " >> html/index.html 
+        date >> html/index.html
+        echo "Author: $GITHUB_ACTOR"
+        echo "Repo: https://github.com/$GITHUB_REPOSITORY"
+        echo "Commit: ${{ github.sha }}"
+        echo "-->"
+        
     - name: Docker Login
       uses: azure/docker-login@v1
       with:
