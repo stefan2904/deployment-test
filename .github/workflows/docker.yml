@@ -14,13 +14,14 @@ jobs:
       
     - name: Write deployment info to html file
       run: |
-        echo "<!--
-        echo "Last deployed: " >> html/index.html 
-        date >> html/index.html
-        echo "Author: $GITHUB_ACTOR"
-        echo "Repo: https://github.com/$GITHUB_REPOSITORY"
-        echo "Commit: ${{ github.sha }}"
-        echo "-->"
+        cat  >> html/index.html  << EOF
+        <!--
+        Last deployed: `date`                                                              
+        Author:        $GITHUB_ACTOR
+        Repo:          https://github.com/$GITHUB_REPOSITORY
+        Commit:        ${{ github.sha }}
+        -->                                         
+        EOF
         
     - name: Docker Login
       uses: azure/docker-login@v1
