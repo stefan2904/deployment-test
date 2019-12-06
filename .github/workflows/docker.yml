@@ -27,7 +27,7 @@ jobs:
       uses: azure/docker-login@v1
       with:
         login-server: docker.pkg.github.com
-        username: ${{ env.GITHUB_ACTOR }}
+        username: $GITHUB_ACTOR
         password: ${{ secrets.GITHUB_TOKEN }}
             
     - name: Docker Build & Push
